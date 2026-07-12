@@ -2,6 +2,9 @@ local Freelist = {}
 local Drawlist = {}
 local Defers = {}
 
+-- Love retained UI system
+
+local kStackSize = 64
 local clear = require("table.clear")
 local bvh = require("lui.bvh")
 
@@ -9,10 +12,13 @@ local ElementsInMouse = {}
 local VectorTemp = { 0, 0 }
 local Broadphase = bvh.new()
 
+local Stack = table.new(kStackSize, 0)
+
 local Elements = {{
 	-- gui root
 	absolutePosition = { 0, 0 },
 	absoluteSize = { 800, 600 },
+	visible = true,
 	children = 0,
 	sibling = 0,
 	kind = 0,
@@ -367,6 +373,7 @@ local function createElement(kind, props, children, parent)
 	props.children = 0
 	props.sibling = 0
 	props.parent = parent and parent.id or 0
+	props.visible = props.visible == nil and true or props.visible
 	props.absolutePosition = { 0, 0 }
 	props.absoluteSize = { 0, 0 }
 	props.id = id
@@ -418,25 +425,33 @@ local function update(id)
 	-- Do this in BFS because it has better
 	-- cache locality compared to DFS
 	local cursor = 1
-	local stack = { id }
-	while stack[cursor] do
-		local id = stack[cursor]
-		cursor = cursor + 1
+	Stack[1] = 1
+	while cursor ~= 0 do
+		local id = Stack[cursor]
+		cursor = cursor - 1
 
 		local current = Elements[id]
-		if current.children ~= 0 then
-			table.insert(stack, current.children)
-		end
+		local visible = current.visible
 
 		if current.sibling ~= 0 then
-			table.insert(stack, current.sibling)
+			cursor = cursor + 1
+			Stack[cursor] = current.sibling
 		end
 
-		if Drawable[current.kind] then
-			table.insert(Drawlist, id)
-		end
+		if visible then
+			-- Only consider an element's children
+			-- if the current element is visible
+			if current.children ~= 0 then
+				cursor = cursor + 1
+				Stack[cursor] = current.children
+			end
 
-		Constraints[current.kind](current)
+			if Drawable[current.kind] then
+				table.insert(Drawlist, id)
+			end
+
+			Constraints[current.kind](current)
+		end
 	end
 
 	for i, defer in ipairs(Defers) do

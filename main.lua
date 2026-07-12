@@ -22,15 +22,17 @@ local function testUi()
 			verticalFlex = true,
 		}),
 
-		-- gridLayout = ui.createElement("UIGridLayout", {
-		-- 	tileSize = { 0, 80, 0, 80 },
-		-- 	horizontalFlex = true,
-		-- 	verticalFlex = true,
-		-- }),
+		gridLayout = ui.createElement("UIGridLayout", {
+			tileSize = { 0, 80, 0, 80 },
+			horizontalFlex = true,
+			verticalFlex = true,
+			visible = false,
+		}),
 
-		-- scale = ui.createElement("UIScale", {
-		-- 	scale = 2,
-		-- }),
+		scale = ui.createElement("UIScale", {
+			scale = 2,
+			visible = false, -- could be false if you want to ignore this
+		}),
 
 		image = ui.createElement("ImageLabel", {
 			position = { 0, 0, 0.5, 0 },
@@ -38,9 +40,9 @@ local function testUi()
 			image = love.graphics.newImage("assets/test.png"),
 			layoutOrder = 1,
 
-            activated = function()
-                print("activated")
-            end,
+			activated = function()
+				print("activated")
+			end,
 
 			mouseEnter = function()
 				print("mouse enter")

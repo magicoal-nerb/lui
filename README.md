@@ -1,14 +1,14 @@
 # lui
-retained container ui system
+retained container ui system thats based off of roblox i guess
+
+## contributing
+* will be accepting pull requests, make sure that your pull requests are concise please
 
 ## features
-* buttons, ui constraints, primitives (frames, text labels, image labels)
+* mouse actions (activated, mouseEnter, mouseLeave)
+* ui constraints (padding, scale, list layout, grid layout)
+* primitives (frames, text labels, image labels)
 * tweening
-
-## properties
-* anchorPoint: where the center of an element should be, e.g: anchorPoint = { 0.5, 0.5 } (at the cener)
-* size: { scaleX, offsetX, scaleY, offsetY }, scale is usually from 0..1, offset is in pixels
-* position: { scaleX, offsetX, scaleY, offsetY }
 
 ## example
 ```lua
@@ -28,18 +28,20 @@ local frame = ui.createElement("Frame", {
 	}),
 
 	listLayout = ui.createElement("UIListLayout", {
-    horizontalFlex = false,
-    verticalFlex = true,
+		horizontalFlex = false,
+		verticalFlex = true,
 	}),
 
 	gridLayout = ui.createElement("UIGridLayout", {
-    tileSize = { 0, 80, 0, 80 },
-    horizontalFlex = true,
-    verticalFlex = true,
+		tileSize = { 0, 80, 0, 80 },
+		horizontalFlex = true,
+		verticalFlex = true,
+		visible = false,
 	}),
 
 	scale = ui.createElement("UIScale", {
-    scale = 2,
+    	scale = 2,
+		visible = true, -- could be false if you want to ignore this
 	}),
 
 	image = ui.createElement("ImageLabel", {
