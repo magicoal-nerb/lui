@@ -3,8 +3,15 @@ retained container ui system thats based off of roblox i guess
 
 ## contributing
 * will be accepting pull requests, make sure that your pull requests are concise please
+retained container ui system thats based off of roblox i guess
+
+## contributing
+* will be accepting pull requests, make sure that your pull requests are concise please
 
 ## features
+* mouse actions (activated, mouseEnter, mouseLeave)
+* ui constraints (padding, scale, list layout, grid layout)
+* primitives (frames, text labels, image labels)
 * mouse actions (activated, mouseEnter, mouseLeave)
 * ui constraints (padding, scale, list layout, grid layout)
 * primitives (frames, text labels, image labels)
