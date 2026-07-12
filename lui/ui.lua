@@ -151,11 +151,14 @@ local Drawable = {
 
 		if element.borderSizePixel then
 			love.graphics.setColor(element.borderColor)
+			love.graphics.setLineWidth(element.borderSizePixel)
 			love.graphics.rectangle(
 				"line",
 				element.absolutePosition[1], element.absolutePosition[2],
 				element.absoluteSize[1], element.absoluteSize[2]
 			)
+			
+			love.graphics.setLineWidth(0)
 		end
 	end,
 
